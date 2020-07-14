@@ -1,14 +1,12 @@
-module NumerosCadenasBooleanos = 
-    /// integer.
-    let ejemploDeEntero = 176
-    /// Cadenas usan comillas dobles.
-    let cadena = "Hello"
-    /// Valores booleanos 'true' and 'false'.
-    let boolean1 = true
-    let boolean2 = false
-    ///impresiones en pantalla
-    printfn "el numero es: %d" ejemploDeEntero
-    printfn "la cadena es: %s" cadena
-    printfn "los valores booleanos son: %b y %b" boolean1 boolean2 
-
-    
+module inmutabilidad =
+    /// ejemplo de inmutabilidad
+    /// la segunda linea de codigo falla en la compilacion porque el "numero" es inmutable y esta ligado.
+    /// Redefinir "numero" para que sea un valor diferente no esta permitido en F#.
+    let numero = 2
+    /// let numero = 3
+    /// una union mutable a continuacion. esto es necesario para poder mutar el valor de "otro numero".
+    let mutable otroNumero = 2
+    printfn "otroNumero  es %d" otroNumero
+    /// al mutar un valor, usa '<-' para asignar un nuevo valor.
+    otroNumero <- otroNumero + 1
+    printfn "otroNumero cambio para ser %d" otroNumero
