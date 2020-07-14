@@ -1,11 +1,12 @@
-module Tuplas =
-    /// una tupla simple de integers.
-    let tupla1 = (1, 2, 3)
-    /// a continuacion se crea una función que intercambia el orden de dos valores en una tupla. 
-    /// la inferencia de tipos de F# generalizará automáticamente la función para tener un tipo genérico, 
-    /// lo que significa que funcionará con cualquier tipo
-    let intercambiarElems (a, b) = (b, a)
-    printfn "El resultado del intercambio (1, 2) es %A" (intercambiarElems (1,2))
-    /// una tupla que consiste de un entero, cadena y double,
-    let tupla2 = (1, "fred", 3.1415)
-    printfn "tupla1: %A\ttupla2: %A" tupla1 tupla2
+module inmutabilidad =
+    /// ejemplo de inmutabilidad
+    /// la segunda linea de codigo falla en la compilacion porque el "numero" es inmutable y esta ligado.
+    /// Redefinir "numero" para que sea un valor diferente no esta permitido en F#.
+    let numero = 2
+    /// let numero = 3
+    /// una union mutable a continuacion. esto es necesario para poder mutar el valor de "otro numero".
+    let mutable otroNumero = 2
+    printfn "otroNumero  es %d" otroNumero
+    /// al mutar un valor, usa '<-' para asignar un nuevo valor.
+    otroNumero <- otroNumero + 1
+    printfn "otroNumero cambio para ser %d" otroNumero
