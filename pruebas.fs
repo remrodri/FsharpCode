@@ -1,60 +1,53 @@
-// Los datos del grupo con los registros
-type RetiroExitoso = {
-    Monto: decimal
-    Balance: decimal
-}
+module UnionesDiscriminadas = 
+    /// Lo siguiente representa el Conjunto de un juego de cartas.
+    type Conjunto = 
+        | Corazones 
+        | Treboles 
+        | Diamantes 
+        | Espadas
+    /// Una Unión Discriminada también puede ser usada para representar el rango de una carta de juego.
+    type Rango = 
+        /// Representa el Rango de las cartas 2 .. 10
+        | Value of int
+        | As
+        | Rey
+        | Reyna
+        | Jack
+        /// Las Uniones Discriminadas también pueden implementar miembros orientado a objetos.
+        static member GetTodosRangos() = 
+            [ yield As
+              for i in 2 .. 10 do yield Value i
+              yield Jack
+              yield Reyna
+              yield Rey ]
+                                   
+    /// Este es un tipo de registro que combina un Conjunto y un Rango.
+    /// Es común utilizar tanto los registros como las uniones discriminadas al representar los datos.
+    type Carta = { Conjunto: Conjunto; Rango: Rango }
+              
+    /// Esto calcula una lista que representa a todas las Cartas de la baraja.
+    let barajaCompleta = 
+        [ for conjunto in [ Corazones; Diamantes; Treboles; Espadas] do
+              for rango in Rango.GetTodosRangos()do 
+                  yield { Conjunto=conjunto; Rango=rango }  ]
+    /// Este ejemplo convierte un objeto "Carta" en una cadena.
+    let mostrarCarta (c: Carta) = 
+        let RangoString = 
+            match c.Rango with 
+            | As -> "As"
+            | Rey -> "Rey"
+            | Reyna -> "Reyna"
+            | Jack -> "Jack"
+            | Value n -> string n
+        let ConjuntoString = 
+            match c.Conjunto with 
+            | Treboles -> "Treboles"
+            | Diamantes -> "Diamantes"
+            | Espadas--> "Espadas"
+            | Corazones -> "Corazones"
+        RangoString  + " de " + ConjuntoString
 
-type Retirofallido = {
-    Monto: decimal
-    Balance: decimal
-    EstaSobregirado: bool
-}
-
-// Usar uniones discriminadas para representar datos de 1 o más formas
-type ResultadoDelRetiro =
-    | Exito of RetiroExitoso
-    | FondosInsuficientes of Retirofallido
-    | TarjetaExpirada of System.DateTime
-    | FalloNoRevelado
-
-/// Este ejemplo muestra cómo definir un nuevo tipo de registro.  
-    type Contacto = 
-        { Nombre     : string
-          Telefono    : string
-          Verificado : bool }
-    /// Este ejemplo muestra cómo instanciar un tipo registro.
-    let contacto1 = 
-        { Nombre = "Alf" 
-          Telefono = "(206) 555-0157" 
-          Verificado = false }
-    /// También puedes hacer esto en la misma línea con el separador ';'.
-    let contactOnSameLine = { Nombre = "Alf"; Telefono = "(206) 555-0157"; Verificado = false }
-    /// Este ejemplo muestra cómo usar "copiar y actualizar" en los valores
-    /// del registro. Crea un nuevo valor de registro que es una copia de 
-    /// contacto1, pero tiene valores diferentes para los campos "Telefono" y 
-    /// "Verificado".
-    let contacto2 = 
-        { contacto1 with 
-            Telefono = "(206) 555-0112"
-            Verificado = true }
-    /// Este ejemplo muestra cómo escribir una función que procesa un valor de un registro.
-    /// Convierte un objeto 'Contacto' en un cadena.
-    let mostrarContacto (c: Contacto) = 
-        c.Nombre + " Telefono: " + c.Telefono + (if not c.Verificado then " (noVerificado)" else "")
-    printfn "Contacto de Alf: %s" (mostrarContacto contacto1)
-    /// Este es un ejemplo de un registro con un miembro.
-    type ContactoAlternate =
-        { Nombre     : string
-          Telefono    : string
-          Address  : string
-          Verificado : bool }
-        /// Los miembros pueden implementar miembros orientados a objetos.
-        member this.PrintedContacto =
-            this.Nombre + " Telefono: " + this.Telefono + (if not this.Verificado then " (noVerificado)" else "") + this.Address
-    let contactAlternate = 
-        { Nombre = "Alf" 
-          Telefono = "(206) 555-0157" 
-          Verificado = false 
-          Address = "111 Alf Street" }
-    // Se accede a los miembros a través del operador '.' en un tipo instanciado.
-    printfn "Contacto alterno de Alf es %s" contactAlternate.PrintedContacto
+    /// Este ejemplo imprime todas las Cartas en una baraja.
+    let imprimitTodasLasCartas() = 
+        for carta in barajaCompleta do 
+            printfn "%s" (mostrarCarta carta)
