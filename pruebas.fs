@@ -1,18 +1,11 @@
-// Expresiones condicionales:if...then...else
-// A diferencia de otros lenguajes, if...then...else la construcción es una expresión, no una instrucción. Esto significa que genera un valor, que es el valor de la última expresión de la bifurcación que se ejecuta
-let test x y =
-  if x = y then "igual a"
-  elif x < y then "es menor que"
-  else "es mayor que"
-
-printfn "%d %s %d." 10 (test 10 20) 20
-
-printfn "What is your name? "
-let nameString = System.Console.ReadLine()
-
-printfn "What is your age? "
-let ageString = System.Console.ReadLine()
-let age = System.Int32.Parse(ageString)
-
-if age < 10
-then printfn "You are only %d years old and already learning F#? Wow!" age
+// Este ejemplo utiliza patrones que tienen cuando los guardias.
+let detectarValor punto objetivo =
+    match punto with
+    | (a, b) when a = objetivo && b = objetivo -> printfn "Ambos valores coinciden con el objetivo %d." objetivo
+    | (a, b) when a = objetivo -> printfn "El primer valor coincide con el objetivo (%d, %d)" objetivo b
+    | (a, b) when b = objetivo -> printfn "El segundo valor coincidió con el objetivo (%d, %d)" a objetivo
+    | _ -> printfn "Ninguno de los dos valores coincide con el objetivo."
+detectarValor (0, 0) 0
+detectarValor (1, 0) 0
+detectarValor (0, 10) 0
+detectarValor (10, 15) 0
