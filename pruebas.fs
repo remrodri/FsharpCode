@@ -8,3 +8,6 @@ let funcion x y =
   printfn ""
 
 funcion 10 4
+
+//Bucles: expresión for...in
+//La for...in expresión se puede comparar con la for each instrucción en otros lenguajes .net porque se usa para recorrer los valores de una colección Enumerable. Sin embargo for...in , también admite la coincidencia de patrones en la colección en lugar de simplemente la iteración en toda la colección.
